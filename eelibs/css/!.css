@@ -1,5 +1,4 @@
 @import url("compibality.css");
-@import url("orange.css");
 
 /* Theme colors */
 :root {
@@ -35,7 +34,7 @@
     --ac-bg-great-hover: #6bacd8;
     --ac-bg-great-light: #5e8199;
 
-    --transitions: 0.3 ease;
+    --transitions: 0.3s ease;
     --transition: all var(--transitions);
 
     --height: 16px;
@@ -46,6 +45,7 @@
     scrollbar-width: thin;
     scrollbar-color: var(--text-sec) var(--bg-sec);
     color: var(--text-pri);
+    transition: var(--transition);;
 }
 
 
@@ -57,14 +57,7 @@ option {
 
 @font-face {
     font-family: 'onesans';
-    src: url(../../../../res/fonts/sans.ttf);
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'onesans2';
-    src: url(../../style/onesans.ttf);
+    src: url(../../fonts/oneuisans.ttf);
     font-weight: normal;
     font-style: normal;
 }
@@ -74,11 +67,16 @@ body {
     margin: 0;
     /*padding: 24px;*/
     color: #f7f7f7;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-family: 'onesans', BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     background: linear-gradient(135deg, #303027, #1C2125, #1F2120);
     /*min-height: 100dvh;*/
-    font-family: 'onesans2', 'onesans', 'Inter', sans-serif !important;
+    font-family: 'onesans', 'Inter', sans-serif !important;
     min-height: 100dvh;
+    overflow-y: hidden;
+}
+
+html {
+    overflow-y: hidden;
 }
 
 a {
@@ -129,6 +127,11 @@ video {
     color: var(--text-pri);
     min-height: 20px;
     transition: var(--transition);
+    background-image: none;
+    background-repeat: no-repeat;
+    background-position-y: center;
+    background-position-x: right;
+    background-position-x: calc(100% - 0.5rem);
 
     &:hover:not(:disabled) {
         background-color: var(--bg-input-hover);
@@ -137,6 +140,10 @@ video {
     &:focus {
         outline: none;
         border-color: var(--ac-text);
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-position-x: right;
+        background-position-x: calc(100% - 0.5rem);
     }
 
     &:disabled {
@@ -144,6 +151,14 @@ video {
         cursor: not-allowed;
         background-color: #242424;
     }
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, textarea:focus {
+    background-image: url(../../img/ui/text.svg);
+}
+
+input[type="number"]:focus {
+    background-image: url(../../img/ui/number.svg);
 }
 
 input[type="range"] {
@@ -155,7 +170,7 @@ input[type="range"] {
     width: 300px;
     height: 10px;
     background: #ccc;
-    border-radius: 5px;
+    border-radius: var(--br);
     outline: none;
     transition: var(--transition);
     margin: 8px 0;
@@ -177,7 +192,6 @@ input[type="range"]::-webkit-slider-thumb {
     border: 2px solid var(--bc);
     border-radius: var(--brs);
     cursor: pointer;
-    border-radius: 0;
     margin: 0;
 }
 
@@ -221,7 +235,7 @@ input[type="radio"] {
 /* При наведении */
 input[type="checkbox"]:hover,
 input[type="radio"]:hover {
-    box-shadow: 0 0 6px var(--ac-bg-great-hover);
+    box-shadow: 0 0 1px var(--ac-bg-great-hover);
 }
 
 /* Активное состояние */
@@ -242,7 +256,7 @@ input[type="radio"] {
 input[type="radio"]:checked {
     background-color: var(--ac-bg-hover);
     border-color: var(--bc);
-    box-shadow: inset 0 0 0 6px #fff, inset 0 0 0 9px #433323;
+    box-shadow: inset 0 0 0 1px #fff, inset 0 0 0 2px #433323;
 }
 
 input, select {
@@ -365,7 +379,7 @@ body.dev_mode .dev_thing {
     display: flex !important;
 }
 
-html body .page {
+html body .page.active {
     width: 100%;
     height: 100%;
     padding: 0;
@@ -373,11 +387,8 @@ html body .page {
     overflow-y: auto;
 }
 
-.page {
-    display: none;
-}
-.page.active {
-    display: inline-flex;
+body {
+    background: #0e0f0e;
 }
 
 fieldset {
