@@ -1,15 +1,30 @@
 
 let pages = [
     {
-        id: 'demo',
-        title: 'Демо-страница',
+        id: 'home',
+        title: 'Main',
         icon: 'img/ui/home.svg',
+    },
+    {
+        id: 'demo',
+        title: 'Demo',
+        icon: 'img/ui/text.svg',
         active: true,
     },
     {
-        id: 'home',
-        title: 'ЫЫЫ',
-        icon: 'img/ui/text.svg',
+        id: 'about',
+        title: 'About',
+        icon: 'img/ui/user.svg',
+    },
+    {
+        id: 'media',
+        title: 'Медиа',
+        icon: 'img/ui/image.svg',
+    },
+    {
+        id: 'tables',
+        title: 'Таблицы',
+        icon: 'img/ui/list/list.svg',
     },
     {
         id: 'settings',

@@ -7,13 +7,13 @@
     <link rel="stylesheet" href="eelibs/import.css">
 </head>
 <body style="display: flex;">
-    <div id="nav" class="active">
+    <div id="nav" class="">
         <button id="openmenu" onclick="document.getElementById('nav').classList.toggle('active')"><img src="img/ui/lines.svg"></button>
         <div id="navcontent"></div>
     </div>
     <div id="content">
         <div class="page" id="settings"></div>
-        <div class="page" id="home">
+        <div class="page block active" id="home">
             <header>
                 <h1>Главная страница</h1>
             </header>
@@ -21,7 +21,7 @@
                 <p>Это главная страница. Используйте навигацию для перехода на другие страницы.</p>
             </section>
         </div>
-        <div class="page active block" id="demo">
+        <div class="page block" id="demo">
             <header>
                 <h1>Демо-страница с множеством HTML-элементов</h1>
                 <nav>
@@ -135,7 +135,8 @@
                         </label>
                 </details>
             </section>
-
+        </div>
+        <div class="page block" id="tables">
             <section id="tables">
                 <h2>Таблицы</h2>
 
@@ -213,11 +214,13 @@
 
                 <pre><code>const hello = "Hello, world!"; console.log(hello);</code></pre>
             </section>
-
+        </div>
+        <div class="page block" id="media">
+            
             <section id="media">
                 <h2>Медиа</h2>
                 <figure>
-                    <img src="https://via.placeholder.com/300x100?text=Image" alt="Заглушка">
+                    <img src="blank.png" alt="Заглушка">
                     <figcaption>Подпись к картинке</figcaption>
                 </figure>
 
@@ -277,6 +280,15 @@
                 <p>Сгенерировано автоматически — пример страницы с множеством элементов.</p>
             </footer>
         </div>
+        <div class="page block" id="about">
+            <header>
+                <h1>О приложении</h1>
+            </header>
+            <section>
+                <p>Это пример HTML-страницы, демонстрирующей различные HTML-элементы без применения CSS-стилей.</p>
+            </section>
+        </div>
+        <div id="navdown" class=""></div>
     </div>
 
 </body>

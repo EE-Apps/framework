@@ -1,23 +1,45 @@
+#content {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
 .page {
-    /*display: none;*/
-    min-height: 0;
-    height: 0;
-    overflow-y: hidden;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateX(40px);
+    transition:
+        transform 0.35s cubic-bezier(0.2,0,0,1),
+        opacity 0.25s ease;
+    pointer-events: none;
+    
     &.active {
-        display: inline-flex;
-        &.block {
-            display: block;
-        }
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: auto;
+        z-index: 2;
+        padding-left: var(--ds) !important;
     }
+
+    /* уходящая */
+    &.leave-left {
+        transform: translateX(-40px);
+        opacity: 0;
+    }
+    &.leave-right {
+        transform: translateX(40px);
+        opacity: 0;
+    }
+
+    /* твой blur */
     &:not(.active) {
         filter: blur(5px);
     }
 }
 
-#content {
-    height: 100dvh;
-    flex: 1;
-    width: calc(100dvw - 90px);
-    overflow-x: auto;
-    padding-left: var(--ds);
+#content.modal-open .page.active {
+    @media (orientation: portrait) {
+        filter: blur(3px) saturate(120%) brightness(50%);
+    }
 }

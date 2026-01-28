@@ -10,5 +10,31 @@
 
     #content {
         min-width: calc(100dvw - 90px);
+        padding-left: var(--dss);
+        display: inline-flex;
+        flex-direction: column-reverse;
+    }
+
+    body/*.nav-fewpages*/ {
+        /*flex-direction: column-reverse;*/
+        #content {
+            width: 100dvw;
+            height: calc(100dvh - 50px);
+        }
+
+        #nav {
+            &:not(.active) {
+                width: 0;
+                max-width: 0;
+                min-width: 0;
+                padding: 0;
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+        }
+    }
+
+    #navdown {
+        display: inline-flex;
     }
 }
