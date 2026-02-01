@@ -114,13 +114,16 @@
                 transform: translateY(50rem);
             }
 
-            height: calc(25rem - var(--ds) * 2);
-            bottom: 3.5rem;
+            height: min(calc(25rem - var(--ds) * 2), calc(60dvh - var(--ds) * 2 - 50px));
+            bottom: var(--dss);
             display: grid;
             grid-template-columns: repeat(3, auto);
+            grid-template-rows: max-content;
             gap: var(--ds);
             justify-items: center;
             z-index: 1000;
+            overflow-y: scroll;
+            overflow-x: hidden;
         }
     }
 }

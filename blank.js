@@ -1,20 +1,43 @@
+window.eelib = {
+    leftBtn: 'nav',
+};
 
 let pages = [
     {
         id: 'home',
         title: 'Main',
+        description: 'General Elements',
         icon: 'img/ui/home.svg',
+        active: true,
+        btns: [
+            ['search'],
+        ],
     },
     {
         id: 'demo',
         title: 'Demo',
         icon: 'img/ui/text.svg',
-        active: true,
+        leftBtn: 'back',
+        btns: [
+            ['search'],
+            ['add'],
+        ],
     },
     {
         id: 'about',
         title: 'About',
         icon: 'img/ui/user.svg',
+        leftBtn: 'none',
+        btns: [
+            ['search'],
+            ['add'],
+            ['test', 'img/ui/code'],
+        ],
+    },
+    {
+        id: 'seek',
+        title: 'SeekBar',
+        icon: 'img/ui/spliter.svg',
     },
     {
         id: 'media',

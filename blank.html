@@ -8,22 +8,19 @@
 </head>
 <body style="display: flex;">
     <div id="nav" class="">
-        <button id="openmenu" onclick="document.getElementById('nav').classList.toggle('active')"><img src="img/ui/lines.svg"></button>
+        <button id="openmenu" onclick="openNavPanel()"><img src="img/ui/lines.svg"></button>
         <div id="navcontent"></div>
     </div>
     <div id="content">
         <div class="page" id="settings"></div>
-        <div class="page block active" id="home">
-            <header>
-                <h1>Главная страница</h1>
-            </header>
+        <div class="page block" id="home">
             <section>
                 <p>Это главная страница. Используйте навигацию для перехода на другие страницы.</p>
+                <div style="background-color: var(--ac-bg); height: 3000px; border-radius: var(--br);"></div>
             </section>
         </div>
         <div class="page block" id="demo">
             <header>
-                <h1>Демо-страница с множеством HTML-элементов</h1>
                 <nav>
                     <a href="#forms">Формы</a> | <a href="#tables">Таблицы</a> | <a href="#media">Медиа</a> | <a href="#extras">Прочее</a>
                 </nav>
@@ -136,10 +133,29 @@
                 </details>
             </section>
         </div>
+        <div class="page block" id="seek">
+            <div class="bg flex">
+                <h3>Horizontal</h3>
+                <div class="bg flex">
+                    <input type="range">
+                    <input type="range" class="def">
+                </div>
+            </div>
+            <div class="bg flex">
+                <h3>Vertical</h3>
+                <div class="bg flex land">
+                    <input type="range" class="vertical">
+                    <input type="range" class="def vertical">
+                </div>
+            </div>
+            <div class="bg flex">
+                <h3>Special</h3>
+                <input type="range">
+                <input type="range" class="def">
+            </div>
+        </div>
         <div class="page block" id="tables">
             <section id="tables">
-                <h2>Таблицы</h2>
-
                 <table border="1">
                     <caption>Пример табличных данных</caption>
                     <thead>
@@ -216,9 +232,7 @@
             </section>
         </div>
         <div class="page block" id="media">
-            
             <section id="media">
-                <h2>Медиа</h2>
                 <figure>
                     <img src="blank.png" alt="Заглушка">
                     <figcaption>Подпись к картинке</figcaption>
@@ -281,9 +295,6 @@
             </footer>
         </div>
         <div class="page block" id="about">
-            <header>
-                <h1>О приложении</h1>
-            </header>
             <section>
                 <p>Это пример HTML-страницы, демонстрирующей различные HTML-элементы без применения CSS-стилей.</p>
             </section>
