@@ -2,7 +2,7 @@ window.eelib = {
     leftBtn: 'nav',
 };
 
-let pages = [
+window.pages = [
     {
         id: 'home',
         title: 'Main',
@@ -22,6 +22,11 @@ let pages = [
             ['search'],
             ['add'],
         ],
+        subcategories: ['all', 'horizontal', 'vertical', 'special'],
+        subpages: [
+            'media',
+            'tables',
+        ],
     },
     {
         id: 'about',
@@ -38,6 +43,7 @@ let pages = [
         id: 'seek',
         title: 'SeekBar',
         icon: 'img/ui/spliter.svg',
+        subcategories: ['all', 'horizontal', 'vertical', 'special'],
     },
     {
         id: 'media',
@@ -53,6 +59,7 @@ let pages = [
         id: 'settings',
         title: 'Настройки',
         icon: 'img/ui/settings.svg',
+        noBottom: true,
     },
 ];
 

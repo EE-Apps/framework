@@ -69,7 +69,8 @@
 }
 
 .page-header-btns {
-    display: inline-flex;
+    display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
@@ -103,4 +104,44 @@
             height: max-content;
         }
     }
+
+    .topNav {
+        width: 100%;
+        display: inline-flex;
+        max-width: 100%;
+        height: max-content;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: var(--dss);
+
+        button {
+            padding: var(--dss);
+            background-color: var(--bg-sec);
+
+            &.active {
+                background-color: var(--ac-bg);
+            }
+        }
+    }
+}
+
+@media (min-width: 769px) {
+#content.two {
+    .page.right {
+        min-width: 0;
+        width: 0;
+        overflow-x: hidden;
+    }
+
+    .page.active {
+        width: calc(40% - 2 * var(--ds));
+
+        &.right {
+            width: calc(60% - 2 * var(--ds));
+            inset: unset;
+            overflow-x: unset;
+            right: 0;
+        }
+    }
+}
 }

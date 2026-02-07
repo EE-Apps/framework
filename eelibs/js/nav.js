@@ -3,11 +3,12 @@ let navc = document.getElementById('navcontent');
 let navd = document.getElementById('navdown');
 
 window.lastestPage = '';
+window.currentPage = '';
 
 let touchStartX = 0;
 let touchStartY = 0;
 
-let leftBtns = {
+window.leftBtns = {
     nav: {
         img: 'img/ui/lines',
         onclick: 'openNavPanel()',
@@ -21,7 +22,7 @@ let leftBtns = {
         onclick: '',
     },
 }
-let rightBtns = {
+window.rightBtns = {
     add: {
         img: 'img/ui/add2',
     },
@@ -54,16 +55,39 @@ function createHeadOfPage(page) {
 
         const img = btnData[1] ?? rightBtns[btnData[0]]?.img ?? 'img/ui/blank';
         const onclick = btnData[2] ?? rightBtns[btnData[0]]?.onclick ?? '';
+        const text = btnData[3] ? btnData[0] : '';
 
         let btn = document.createElement('button');
-        btn.onclick = onclick;
-        btn.innerHTML = `<img src="${img}.svg">`;
+        if (typeof onclick === 'function') {
+            btn.onclick = onclick;
+        } else if (typeof onclick === 'string' && onclick !== '') {
+            btn.setAttribute('onclick', onclick);
+        }
+        btn.innerHTML = `<img src="${img}.svg">${text}`;
 
         return btn;
     }
 
     function toggleNavRightMore(pageId) {
         document.getElementById(`${pageId}-navRightMore`).classList.toggle('active');
+    }
+
+    function generateTopSubpages(page) {
+        if (!page.subcategories || page.subcategories.length === 0) {
+            return null; 
+        }
+        const topNav = document.createElement('div');
+        topNav.className = 'topNav';
+
+        // Создаем кнопки и добавляем их в контейнер
+        page.subcategories.forEach((curSub, i) => {
+            const btn = document.createElement('button');
+            btn.textContent = curSub;
+            btn.className = i == 0? 'active' : '';
+            topNav.appendChild(btn);
+        });
+
+        return topNav;
     }
 
     let leftBtn = page.leftBtn ? generateLeftButton(page.leftBtn) : generateLeftButton(eelib.leftBtn);
@@ -74,6 +98,9 @@ function createHeadOfPage(page) {
         ${leftBtn}
         <div class="lefthead"></div>
     `;
+    try {
+        hnav.appendChild(generateTopSubpages(page));
+    } catch {}
 
     const headerBtns = [];
     const moreBtns = [];
@@ -117,6 +144,7 @@ function createNavDownButton(page) {
     if (page.active) {
         btn.classList.add('active')
         lastestPage = page.id;
+        currentPage = page.id;
     };
     btn.onclick = () => {
         if (page.id == 'MORE') {
@@ -148,42 +176,72 @@ function createNavMoreButton(page) {
 }
 
 function createNav(pages) {
-    let i = 0;
+    const MAX_NAVDOWN = 4;
 
-    if (pages.length > 4) {
-        if (!document.getElementById('moreDiv')) {
-            let moreDiv = document.createElement('div');
-            moreDiv.id = 'moreDiv';
-            moreDiv.className = 'modal dialog';
-            document.getElementById('content').appendChild(moreDiv);
-        }
+    // готовим moreDiv
+    let moreDiv = document.getElementById('moreDiv');
+    if (!moreDiv) {
+        moreDiv = document.createElement('div');
+        moreDiv.id = 'moreDiv';
+        moreDiv.className = 'modal dialog';
+        document.getElementById('content').appendChild(moreDiv);
+    } else {
+        moreDiv.innerHTML = '';
     }
 
+    // считаем страницы без noBottom
+    const bottomPages = pages.filter(p => !p.noBottom);
+
+    const needMore = bottomPages.length > MAX_NAVDOWN;
+    const maxDirect = needMore ? MAX_NAVDOWN - 1 : MAX_NAVDOWN;
+
+    let addedDirect = 0;
+    let overflowCount = 0;
+
     for (let page of pages) {
-        i++;
         let btn = document.createElement('button');
         btn.classList.add('navbtn');
+
         if (page.active) {
             btn.classList.add('active');
             document.getElementById(page.id).classList.add('active');
         }
+
         btn.innerHTML = `<img src="${page.icon}"><span>${page.title}</span>`;
-        btn.id = `${page.id}-navc`
+        btn.id = `${page.id}-navc`;
+
         btn.onclick = () => {
-            document.querySelectorAll('.navbtn.active').forEach(element => {
-                element.classList.remove('active');
+            document.querySelectorAll('.navbtn.active').forEach(el => {
+                el.classList.remove('active');
             });
             switchPage(document.getElementById(page.id));
             btn.classList.add('active');
         };
+
         page.id == 'settings' ? nav.appendChild(btn) : navc.appendChild(btn);
 
-        if ( /*page.id != 'settings' &&*/ ( ( i < 5 && pages.length < 5) || ( i < 4 && pages.length > 4) ) ) createNavDownButton(page);
-        if ( pages.length > 4 && i > 3 ) createNavMoreButton(page);
-        createHeadOfPage(page, pages);
+        // ===== НИЖНЯЯ НАВИГАЦИЯ =====
+        if (!page.noBottom && addedDirect < maxDirect) {
+            // обычные кнопки вниз
+            createNavDownButton(page);
+            addedDirect++;
+        } 
+        else if (!page.noBottom) {
+            // кнопки в MORE — создаём ВРУЧНУЮ
+            let moreBtn = document.createElement('button');
+            moreBtn.className = 'navbtn';
+            moreBtn.innerHTML = `<img src="${page.icon}"><span>${page.title}</span>`;
+            moreBtn.onclick = () => switchPage(document.getElementById(page.id));
+            moreDiv.appendChild(moreBtn);
+
+            overflowCount++;
+        }
+
+        createHeadOfPage(page);
     }
 
-    if (pages.length > 4) {
+    // кнопка MORE только если есть лишние
+    if (needMore && overflowCount > 0) {
         createNavDownButton({
             id: 'MORE',
             title: 'Ещё',
@@ -197,6 +255,7 @@ function createNav(pages) {
         document.body.classList.remove('nav-fewpages');
     }
 }
+
 
 function getActivePage() {
     return document.querySelector('.page.active');
@@ -223,32 +282,63 @@ function scrollToBottom() {
 }
 
 function switchPage(newpage) {
-    let current = document.querySelector('.page.active');
+    const current = document.querySelector('.page.active');
     if (!newpage || newpage === current) return;
-    lastestPage = current.id;
 
-    current.classList.remove('active');
-    current.classList.add('leave-left');
+    // если сейчас активна подстраница — берём её родителя
+    const basePage = current.dataset.parent
+        ? document.getElementById(current.dataset.parent)
+        : current;
+
+    lastestPage = basePage.id;
+
+    const basePageData = pages.find(p => p.id === basePage.id);
+    const isSubpage = Array.isArray(basePageData?.subpages) ? basePageData.subpages.includes(newpage.id) : false;
+
+    if (!isSubpage) {
+        // обычная смена страниц
+        current.classList.remove('active');
+        current.classList.add('leave-left');
+
+        document.getElementById('content').classList.remove('two');
+        document.querySelector('.page.active.right')?.classList.remove('active');
+    } else {
+        // открываем подстраницу справа
+        document.getElementById('content').classList.add('two');
+
+        // убираем старую подстраницу, если была
+        document.querySelectorAll('.page.right.active').forEach(p => {
+            p.classList.remove('active', 'right');
+            p.classList.add('leave-right');
+        });
+
+        newpage.classList.add('right');
+        newpage.dataset.parent = basePage.id; // помечаем родителя
+    }
 
     newpage.classList.remove('leave-left', 'leave-right');
     newpage.classList.add('active');
 
-    if (isMobile && document.getElementById('nav').classList.contains('active')) {
-        openNavPanel()
+    if (!isSubpage) {
+        document.querySelectorAll('.navbtn.active').forEach(el => {
+            el.classList.remove('active');
+        });
+
+        document.getElementById(`${newpage.id}-navc`)?.classList.add('active');
+        document.getElementById(`${newpage.id}-navd`)?.classList.add('active');
+
+        setTimeout(() => {
+            current.classList.remove('leave-left', 'leave-right');
+        }, 400);
     }
 
-    setTimeout(() => {
-        current.classList.remove('leave-left', 'leave-right');
-    }, 400);
+    if (isMobile && document.getElementById('nav').classList.contains('active')) {
+        openNavPanel();
+    }
 }
 
 function changePage(newpage) {
-    document.querySelectorAll('.navbtn.active').forEach(element => {
-        element.classList.remove('active');
-    });
     switchPage(document.getElementById(newpage));
-    document.getElementById(`${newpage}-navc`).classList.add('active');
-    document.getElementById(`${newpage}-navd`).classList.add('active');
 }
 
 function handleOutsideClick(event) {
@@ -316,6 +406,7 @@ function returnToPage() {
 };
 
 window.switchPage = switchPage;
+window.changePage = changePage;
 window.createNav = createNav;
 window.openNavPanel = openNavPanel;
 window.returnToPage = returnToPage
