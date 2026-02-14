@@ -17,7 +17,6 @@ window.pages = [
         id: 'demo',
         title: 'Demo',
         icon: 'img/ui/text.svg',
-        leftBtn: 'back',
         btns: [
             ['search'],
             ['add'],
@@ -27,6 +26,7 @@ window.pages = [
             'media',
             'tables',
         ],
+        subpagesmode: 'default',
     },
     {
         id: 'about',
@@ -38,22 +38,29 @@ window.pages = [
             ['add'],
             ['test', 'img/ui/code'],
         ],
+        subpages: [
+            'seek',
+        ],
+        subpagesmode: 'modal',
     },
     {
         id: 'seek',
         title: 'SeekBar',
         icon: 'img/ui/spliter.svg',
         subcategories: ['all', 'horizontal', 'vertical', 'special'],
+        leftBtn: 'back',
     },
     {
         id: 'media',
         title: 'Медиа',
         icon: 'img/ui/image.svg',
+        leftBtn: 'back',
     },
     {
         id: 'tables',
         title: 'Таблицы',
         icon: 'img/ui/list/list.svg',
+        leftBtn: 'back',
     },
     {
         id: 'settings',
@@ -63,7 +70,24 @@ window.pages = [
     },
 ];
 
-createNav(pages);
+// Wait for pages.js to be ready before initializing navigation
+function initializeNav() {
+    if (window.pagesManager && typeof window.pagesManager.createBtnList === 'function') {
+        console.log('Initializing navigation...');
+        window.cnavMgr.init(pages);
+        window.cnavMgr.createNav(pages);
+    } else {
+        console.log('Waiting for pagesManager...');
+        window.addEventListener('pagesManagerReady', () => {
+            console.log('pagesManager ready, initializing navigation...');
+            window.cnavMgr.init(pages);
+            window.cnavMgr.createNav(pages);
+        }, { once: true });
+    }
+}
+
+// Initialize navigation
+initializeNav();
 
 const defaultSettings = {
     clock: {
