@@ -319,6 +319,7 @@ class Nav {
                 if (modalWindow) {
                     modalWindow.classList.toggle('active');
                 }
+                this.content.classList.toggle('modal-open');
                 
                 // Визуальная обратная связь (опционально)
                 //document.querySelectorAll('.navbtn.active').forEach(el => el.classList.remove('active'));
