@@ -21,8 +21,9 @@
     --text-sec-hover: #d6d6d6;
 
     --br: 1.2rem;
-    --brs: 0.5rem;
+    --brs: 0.9rem;
     --brc: 99999px;
+	--brr: var(--brc);
     --bc: #404040;
     --ds: 1rem;
     --dss: 0.5rem;

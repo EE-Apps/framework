@@ -17,7 +17,7 @@
     overflow-x: hidden;
 
     .pageContent {
-        padding: 0 var(--ds) calc(var(--ds) + env(safe-area-inset-bottom) + 50px) var(--ds);
+        padding: 0 var(--ds) calc(env(safe-area-inset-bottom) + 50px) var(--ds);
     }
     
     &.active {
