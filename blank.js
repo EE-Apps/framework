@@ -29,6 +29,11 @@ window.eelib.pages = [
         subpagesmode: 'default',
     },
     {
+        id: 'buttons',
+        title: 'Buttons',
+        icon: 'img/ui/edit.svg',
+    },
+    {
         id: 'about',
         title: 'About',
         icon: 'img/ui/user.svg',

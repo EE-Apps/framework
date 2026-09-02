@@ -372,7 +372,7 @@ class Nav {
                 current.classList.remove('right');
                 current.dataset.currentSubname = null
                 return;
-            } else if (subname != null && subname != rightCurrent.dataset.currentSubname) {
+            } else if (subname != null && rightCurrent && subname != rightCurrent.dataset.currentSubname) {
                 rightCurrent.dataset.currentSubname = subname
             } else {
                 return;
