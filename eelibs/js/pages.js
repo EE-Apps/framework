@@ -1,5 +1,5 @@
 class PagesManager {
-    constructor(parameters) {
+    constructor() {
         
     }
 
@@ -13,6 +13,7 @@ class PagesManager {
 
             el.innerHTML = `<div class="imgcont"><img src="${btn.img || 'img/ui/check/checked.svg'}"></div><p>${name}</p>`;
             el.dataset.where = id;
+            if (btn.id == activeBtn) el.classList.add('active')
 
             el.addEventListener('click', () => {
                 // Fix: Get all buttons in container and remove active class
@@ -26,7 +27,6 @@ class PagesManager {
 }
 
 // Initialize immediately and make globally available
-// RENAMED: window.pagesManager instead of window.pages to avoid conflict with pages array
 console.log('Инициализация PagesManager...');
 window.pagesManager = new PagesManager();
 console.log('PagesManager инициализирован:', window.pagesManager);
@@ -37,12 +37,3 @@ export { PagesManager };
 
 // Dispatch event to signal that pagesManager is ready
 window.dispatchEvent(new CustomEvent('pagesManagerReady'));
-
-// Optional: Test after DOM loads
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM loaded - testing createBtnList...');
-    console.log(window.pagesManager.createBtnList([
-        {name:'all', id:'all', img:'img/ui/text.svg'}, 
-        {name:'ы', id:'ы', img:'img/ui/color.svg'}
-    ], 'ы'));
-});

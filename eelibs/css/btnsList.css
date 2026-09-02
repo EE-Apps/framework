@@ -9,6 +9,7 @@
     height: max-content;
     overflow-x: auto;
     overflow-y: hidden;
+    scrollbar-width: none;
 
     button {
         border-radius: var(--brc);
@@ -21,6 +22,7 @@
         min-width: 100px;
         height: calc(24px + 8px * 2);
         transition: var(--tr-in);
+        position: relative;
 
         &:hover {
             background-color: var(--bg-sec-hover);

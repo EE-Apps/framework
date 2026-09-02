@@ -24,6 +24,8 @@ class SettingsManager {
         this.bridge = window.bridge || null;
         this.settingsFileName = 'settings.json';
         this.isSyncing = false;
+
+        this.init(window.eelib.settingsConfig)
     }
 
     // Инициализация настроек

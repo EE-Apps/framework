@@ -56,8 +56,8 @@ class Nav {
         `;
 
         function generateLeftButton(type) {
-            const data = window.cnavMgr.leftBtns[type];
-            return `<button class="leftBtnsNav" onclick="${data.onclick}"><img src="${data.img}.svg"></button>`;
+            const data = window.cnavMgr?.leftBtns[type]
+            return `<button class="leftBtnsNav" onclick="${data?.onclick}"><img src="${data?.img}.svg"></button>`
         }
 
         function generateRightButton(page, i) {
@@ -98,11 +98,11 @@ class Nav {
                 const btnOptions = page.subcategories.map(sub => ({
                     name: sub,
                     id: sub,
-                    img: 'img/ui/check/checked.svg' // или любой другой путь
+                    img: 'img/ui/check/checked.svg'
                 }));
 
-                // "Пинаем" функцию
-                const topNav = window.pagesManager.createBtnList(btnOptions);
+                // пинаем создание
+                const topNav = window.pagesManager.createBtnList(btnOptions, page.subcategoryActive);
 
                 // Добавляем специфический класс для этого контейнера
                 topNav.classList.add('topNav');
@@ -114,7 +114,7 @@ class Nav {
             }
         }
 
-        let leftBtn = page.leftBtn ? generateLeftButton(page.leftBtn) : generateLeftButton(eelib.leftBtn);
+        let leftBtn = page.leftBtn ? generateLeftButton(page.leftBtn) : generateLeftButton('nav');
 
         let hnav = document.createElement('div');
         hnav.className = 'page-header-btns';
@@ -254,7 +254,7 @@ class Nav {
             btn.classList.add('navbtn');
             if (page.active) btn.classList.add('active');
             if (page.active) document.getElementById(page.id).classList.add('active');
-            console.log(page.id, page.active);
+            if (page.active) console.log('active page: ' + page.id);
             btn.innerHTML = `<img src="${page.icon}" alt=""><span>${page.title}</span>`;
             btn.id = `${page.id}-navc`;
             
@@ -268,7 +268,7 @@ class Nav {
             if (page.id === 'settings') {
                 window.cnavMgr.nav.appendChild(btn);
             } else {
-                window.cnavMgr.navContent.appendChild(btn);
+                if (!page.noLeft) window.cnavMgr.navContent.appendChild(btn);
             }
 
             // === ОБРАБОТКА НИЖНЕЙ ПАНЕЛИ ===
@@ -358,17 +358,22 @@ class Nav {
         }
     }
 
-    switchPage(newpage) {
+    switchPage(newpage, subname) {
+        window.cnavMgr.lastestPage = document.querySelector('.page.active:not(.right)')?.id;
+        window.cnavMgr.currentPage = newpage.id;
         const rightCurrent = document.querySelector('.page.active.right');
         const current = rightCurrent? rightCurrent : document.querySelector('.page.active');
         if (!newpage || newpage === current) {
-            if (rightCurrent) {
+            if (rightCurrent && (subname == null || subname === rightCurrent.dataset.currentSubname)) {
                 const parentPage = document.querySelector('.page.active:not(.right)');
                 parentPage.classList.remove('active', 'right');
                 parentPage.classList.add('leave-left')
                 content.classList.remove('two', 'twomodal');
                 current.classList.remove('right');
+                current.dataset.currentSubname = null
                 return;
+            } else if (subname != null && subname != rightCurrent.dataset.currentSubname) {
+                rightCurrent.dataset.currentSubname = subname
             } else {
                 return;
             }
@@ -405,8 +410,10 @@ class Nav {
                 p.classList.add('leave-right');
             });
 
+            
             newpage.classList.add('right');
-            newpage.dataset.parent = basePage.id; // помечаем родителя
+            newpage.dataset.currentSubname = subname
+            newpage.dataset.parent = basePage.id;
         }
 
         newpage.classList.remove('leave-left', 'leave-right');
@@ -430,8 +437,8 @@ class Nav {
         }
     }
 
-    changePage(newpage) {
-        switchPage(document.getElementById(newpage));
+    changePage(newpage, subname) {
+        switchPage(document.getElementById(newpage), subname);
     }
 
     handleOutsideClick(event) {
@@ -497,12 +504,4 @@ class Nav {
     };
 }
 
-console.log('Инициализация NavManager...');
 window.cnavMgr = new Nav();
-console.log('NavManager инициализирован:', window.cnavMgr);
-
-window.switchPage   = window.cnavMgr.switchPage;
-window.changePage   = window.cnavMgr.changePage;
-window.createNav    = window.cnavMgr.createNav;
-window.openNavPanel = window.cnavMgr.openNavPanel;
-window.returnToPage = window.cnavMgr.returnToPage
