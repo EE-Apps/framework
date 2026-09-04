@@ -8,7 +8,6 @@ window.eelib.pages = [
         title: 'Main',
         description: 'General Elements',
         icon: 'img/ui/home.svg',
-        active: true,
         btns: [
             ['search'],
         ],
@@ -27,6 +26,12 @@ window.eelib.pages = [
             'tables',
         ],
         subpagesmode: 'default',
+    },
+    {
+        id: 'cards',
+        title: 'Cards',
+        active: true,
+        icon: 'img/ui/edit.svg',
     },
     {
         id: 'buttons',
