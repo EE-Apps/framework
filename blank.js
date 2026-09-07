@@ -105,29 +105,43 @@ window.eelib.settingsConfig = {
             monthAsText: false,
             dateSeparator: "/",
             jucheCalendar: false,
-        }
+        },
+        main: {
+            theme: "dark",
+        },
     },
     schema: {
         clock: {
-        title: "Clock",
-        items: [
-            {
-                type: "select",
-                key: "clockFormat",
-                label: "Clock Format",
-                options: { "12": "12-hour", "24": "24-hour" }
-            },
-            { type: "toggle", key: "showSeconds", label: "Show Seconds" },
-            { type: "toggle", key: "showDate", label: "Show Date" }
-        ]
+            title: "Clock",
+            items: [
+                {
+                    type: "select",
+                    key: "clockFormat",
+                    label: "Clock Format",
+                    options: { "12": "12-hour", "24": "24-hour" }
+                },
+                { type: "toggle", key: "showSeconds", label: "Show Seconds" },
+                { type: "toggle", key: "showDate", label: "Show Date" }
+            ]
         },
         weather: {
-        title: "Weather",
-        items: [
-            { type: "toggle", key: "background", label: "Weather Background" },
-            { type: "toggle", key: "pageBackground", label: "Page Background" }
-        ]
-        }
+            title: "Weather",
+            items: [
+                { type: "toggle", key: "background", label: "Weather Background" },
+                { type: "toggle", key: "pageBackground", label: "Page Background" }
+            ]
+        },
+        main: {
+            title: "Main",
+            items: [
+                {
+                    type: "select",
+                    key: "theme",
+                    label: "Theme",
+                    options: { "dark": "Dark", "light": "Light", "oled": "Black OLED" }
+                },
+            ]
+        },
     },
     onChange: (settings) => {
         // Вызывается при любом изменении настроек
