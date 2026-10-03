@@ -1,5 +1,10 @@
 window.eelib = {
-    leftBtn: 'nav',
+    nav: {
+        leftBtn: 'nav',
+        downStyle: 'floating',
+        noName: false,
+        noIcon: false,
+    },
 };
 
 window.eelib.pages = [
@@ -16,9 +21,13 @@ window.eelib.pages = [
         id: 'demo',
         title: 'Demo',
         icon: 'img/ui/text.svg',
+        active: true,
         btns: [
             ['search'],
             ['add'],
+            ['test', 'img/ui/code', 'window.notification.info("Test", "Clicked button")', 'Test'],
+            ['test', 'img/ui/code', 'window.notification.info("Test", "Clicked button")', 'Test'],
+            ['test', 'img/ui/code', 'window.notification.info("Test", "Clicked button")', 'Test'],
         ],
         subcategories: ['all', 'horizontal', 'vertical', 'special'],
         subpages: [
@@ -30,7 +39,6 @@ window.eelib.pages = [
     {
         id: 'cards',
         title: 'Cards',
-        active: true,
         icon: 'img/ui/edit.svg',
     },
     {

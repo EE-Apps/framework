@@ -77,6 +77,10 @@
     h1, h2, h3, h4, p, span, b {
         margin: 0;
     }
+
+    img {
+        width: calc(var(--ds) * 3);
+    }
 }
 
 .page-header-btns {
@@ -84,10 +88,13 @@
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-between;
-    width: calc(100% - 2 * var(--ds));
+    width: calc(100%);
     position: sticky;
     top: 0;
+    left: 0;
+    right: 0;
     padding: var(--ds);
+    padding-top: calc(var(--ds, 0px) + var(--safe-area-top, env(safe-area-inset-top, 0px)));
     background-color: var(--bg-base);
     z-index: 50;
 
@@ -95,10 +102,21 @@
         border: none;
         background: none;
     }
+
+    .lefthead, .leftBtnsNav {
+        button {
+            transform: none;
+            padding: var(--dss);
+
+            &:hover, &:active {
+                transform: none;
+            }
+        }
+    }
     
     .navRightMore {
         position: absolute;
-        top: 3rem;
+        top: calc(3rem + var(--safe-area-top, env(safe-area-inset-top, 0px)));
         right: var(--dss);
         display: none;
         flex-direction: column;
@@ -110,6 +128,8 @@
         height: 0;
         transition: all var(--tr-in);
         transition: all 0.15s cubic-bezier(0.4, 0.0, 1, 1);
+
+        overflow: hidden;
 
         &:not(.active) {
             min-width: 0;
@@ -125,6 +145,8 @@
             width: 200px;
             height: max-content;
             padding: var(--dss);
+
+            padding: 0;
         }
 
         button {
@@ -132,6 +154,12 @@
             display: inline-flex;
             align-items: center;
             gap: var(--ds);
+            padding: var(--dss) var(--ds);
+            border-radius: 0;
+
+            @media (hover: hover) { &:hover {
+                background-color: var(--bg-pri-hover);
+            }}
         }
     }
 
@@ -208,4 +236,8 @@
         }
     }
 }
+}
+
+.page-header, .page-header-btns, .pageContent {
+    background-color: var(--bg-base);
 }

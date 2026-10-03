@@ -89,6 +89,7 @@
 }
 #nav:not(.active) {
     width: 50px;
+    min-width: calc(50px + var(--ds));
     .navbtn {
         /*justify-content: center;*/
             min-width: 40px;
@@ -142,11 +143,7 @@
     justify-content: space-evenly;
     width: unset;
     height: 50px;
-    position: fixed;
-    left: calc(-1 * var(--ds));
-    right: calc(-1 * var(--ds));
-    bottom: 0;
-    padding: 0 var(--ds) calc(env(safe-area-inset-bottom) + var(--ds)) var(--ds);
+    height: max-content;
     background-color: var(--bg-pri-great);
     z-index: 50;
 
@@ -154,9 +151,48 @@
     max-height: 100px;
     transition: max-height 0.2 ease;
 
+    &.noname {
+        span {
+            display: none
+        }
+    }
+    &.noicon {
+        img {
+            display: none;
+        }
+    }
+    &.classic, &:not(.floating) {
+        position: fixed;
+        left: calc(-1 * var(--ds));
+        right: calc(-1 * var(--ds));
+        bottom: 0;
+        padding: 0 var(--ds) calc(env(safe-area-inset-bottom) + var(--ds)) var(--ds);
+    }
+    &.floating {
+        position: absolute;
+        left: calc(var(--ds) * 1.5);
+        right: calc(var(--ds) * 1.5);
+        bottom: calc(var(--ds) * 1.5);
+        padding: var(--dss);
+        margin: 0 auto;
+        justify-content: space-between;
+        border-radius: var(--brr);
+        border: 1px solid var(--bc);
+
+        .navbtn {
+            height: calc(40px + var(--ds));
+            border-radius: var(--brs);
+
+            &.active {
+                border-radius: var(--brc);
+            }
+        }
+    }
+
     &.hidden {
         max-height: 0;
         padding: 0;
+        border-width: 0;
     }
 
     .navbtn {
@@ -207,6 +243,15 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
+        background-color: #00000000;
+
+        @media (hover: hover) {&:hover {
+            background-color: var(--bg-sec-hover);
+        }}
+        &:active {
+            background-color: var(--c-gray-700);
+        }
 
         img {
             width: 50%;
