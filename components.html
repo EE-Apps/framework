@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Components | Harno UI</title>
+    <link rel="stylesheet" href="eelibs/import.css">
+
+    <style>
+        #container {
+            width: 100dvw;
+            height: 100dvh;
+            overflow: hidden;
+        }
+
+        .specialPage {
+            min-width: 100dvw;
+            min-height: 100dvh;
+            max-width: 100dvw;
+            max-height: 100dvh;
+            overflow: scroll;
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            &:not(.active) {
+                pointer-events: none;
+
+                &#welcome {
+                    top: -200dvh;
+                    opacity: 0;
+                    border-bottom-left-radius: var(--br);
+                    border-bottom-right-radius: var(--br);
+                }
+
+                &#components {
+                    opacity: 0;
+                }
+            }
+
+            .pageContent {
+                min-width: max-content;
+                min-height: max-content;
+            }
+        }
+
+        #welcome .pageContent {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background-color: var(--bg-base);
+            background: #020024;
+            background: linear-gradient(132deg, rgb(1, 0, 18) 0%, rgb(4, 4, 61) 35%, rgb(21, 58, 66) 100%);
+            transition: top 1.3s ease, opacity 0.7s ease, border 0.3s ease;
+            z-index: 100;
+
+            h1,
+            h2,
+            h3 {
+                margin: 0;
+                margin-bottom: var(--ds);
+            }
+
+            h1 {
+                font-weight: 800;
+            }
+
+            h2,
+            h3 {
+                color: var(--text-sec);
+            }
+
+            #startBtn {
+                margin-top: var(--ds2);
+                min-width: 150px;
+            }
+        }
+
+        #components .pageContent {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 16px;
+
+            margin: var(--ds);
+
+            transition: opacity 0.3s ease;
+        }
+
+        .componentCard {
+            background-color: var(--c-gray-700);
+            border-radius: var(--br);
+            padding: var(--ds);
+            min-width: 400px;
+
+            .componentName {
+                margin: 0;
+                margin-bottom: var(--ds);
+            }
+        }
+
+        .componentVariations {
+            background-color: var(--c-gray-900);
+            border-radius: var(--br);
+            padding: var(--ds);
+
+            display: flex;
+            flex-direction: column;
+            gap: var(--ds);
+        }
+    </style>
+</head>
+
+<body background="black">
+    <div id="container">
+        <div class="specialPage" id="welcome">
+            <div class="pageContent">
+                <h1>Harno UI</h1>
+                <h3>Design System</h3>
+                <button id="startBtn" class="aBtn" onclick="changeSpecialPage('components')">Start<img
+                        src="img/ui/arrow/right.svg"></button>
+            </div>
+        </div>
+        <div class="specialPage" id="components">
+            <div class="pageContent">
+                <div class="componentCard">
+                    <h2 class="componentName">Buttons</h2>
+                    <div class="componentVariations">
+                        <button class="aBtn"> <img src="img/ui/home.svg">Button</button>
+                        <button class="aBtn" disabled> <img src="img/ui/home.svg">Button</button>
+                        <button class="aBtn sec"> <img src="img/ui/home.svg">Button</button>
+                        <button class="aBtn ghost"> <img src="img/ui/home.svg">Button</button>
+                        <button class="aBtn danger"> <img src="img/ui/home.svg">Button</button>
+                        <button class="aBtn bordered"> <img src="img/ui/home.svg">Button</button>
+                        <button class="aBtn bordered dotted"> <img src="img/ui/home.svg">Button</button>
+                    </div>
+                </div>
+                <div class="componentCard">
+                    <h2 class="componentName">Bottom Navigation</h2>
+                    <div class="componentVariations">
+                        <div id="navdown" class="floating" style="display: flex; position: static; width: calc(100% - var(--ds) * 2);">
+                            <button class="navbtn" id="home-navd">
+                                <img src="img/ui/home.svg">
+                                <span>Main</span>
+                            </button>
+                            <button class="navbtn active" id="demo-navd">
+                                <img src="img/ui/text.svg">
+                                <span>Demo</span>
+                            </button>
+                            <button class="navbtn" id="about-navd">
+                                <img src="img/ui/user.svg">
+                                <span>About</span>
+                            </button>
+                            <button class="navbtn" id="more-nav-btn">
+                                <img src="img/ui/lines.svg" alt="Ещё">
+                                <span>Ещё</span>
+                            </button>
+                        </div>
+                        <div id="navdown" class="floating noName" style="display: flex; position: static; width: calc(100% - var(--ds) * 2);">
+                            <button class="navbtn" id="home-navd">
+                                <img src="img/ui/home.svg">
+                                <span>Main</span>
+                            </button>
+                            <button class="navbtn active" id="demo-navd">
+                                <img src="img/ui/text.svg">
+                                <span>Demo</span>
+                            </button>
+                            <button class="navbtn" id="about-navd">
+                                <img src="img/ui/user.svg">
+                                <span>About</span>
+                            </button>
+                            <button class="navbtn" id="more-nav-btn">
+                                <img src="img/ui/lines.svg" alt="Ещё">
+                                <span>Ещё</span>
+                            </button>
+                        </div>
+                        <div id="navdown" class="classic" style="display: flex; position: static; width: calc(100% - var(--ds) * 2);">
+                            <button class="navbtn" id="home-navd">
+                                <img src="img/ui/home.svg">
+                                <span>Main</span>
+                            </button>
+                            <button class="navbtn active" id="demo-navd">
+                                <img src="img/ui/text.svg">
+                                <span>Demo</span>
+                            </button>
+                            <button class="navbtn" id="about-navd">
+                                <img src="img/ui/user.svg">
+                                <span>About</span>
+                            </button>
+                            <button class="navbtn" id="more-nav-btn">
+                                <img src="img/ui/lines.svg" alt="Ещё">
+                                <span>Ещё</span>
+                            </button>
+                        </div>
+                        <div id="navdown" class="classic noName" style="display: flex; position: static; width: calc(100% - var(--ds) * 2);">
+                            <button class="navbtn" id="home-navd">
+                                <img src="img/ui/home.svg">
+                                <span>Main</span>
+                            </button>
+                            <button class="navbtn active" id="demo-navd">
+                                <img src="img/ui/text.svg">
+                                <span>Demo</span>
+                            </button>
+                            <button class="navbtn" id="about-navd">
+                                <img src="img/ui/user.svg">
+                                <span>About</span>
+                            </button>
+                            <button class="navbtn" id="more-nav-btn">
+                                <img src="img/ui/lines.svg" alt="Ещё">
+                                <span>Ещё</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="componentCard">
+                    <h2 class="componentName">Desktop Navigation</h2>
+                    <div class="componentVariations flexrow gap1">
+                        <div id="nav" class="doNotHide" style="max-height: unset; position: relative;">
+                            <button id="openmenu" onclick="openNavPanel()" style="top: var(--ds);">
+                                <img src="img/ui/lines.svg">
+                            </button>
+                            <div id="navcontent">
+                                <button class="navbtn" id="home-navc">
+                                    <img src="img/ui/home.svg" alt="">
+                                    <span>Main</span>
+                                </button>
+                                <button class="navbtn active" id="demo-navc">
+                                    <img src="img/ui/text.svg" alt="">
+                                    <span>Demo</span>
+                                </button>
+                                <button class="navbtn" id="about-navc">
+                                    <img src="img/ui/user.svg" alt="">
+                                    <span>About</span>
+                                </button>
+                                <button class="navbtn" id="cards-navc">
+                                    <img src="img/ui/edit.svg" alt="">
+                                    <span>Cards</span>
+                                </button>
+                                <button class="navbtn" id="buttons-navc">
+                                    <img src="img/ui/edit.svg" alt="">
+                                    <span>Buttons</span>
+                                </button>
+                                <button class="navbtn" id="seek-navc">
+                                    <img src="img/ui/spliter.svg" alt="">
+                                    <span>SeekBar</span>
+                                </button>
+                                <button class="navbtn" id="media-navc">
+                                    <img src="img/ui/image.svg" alt="">
+                                    <span>Медиа</span>
+                                </button>
+                                <button class="navbtn" id="tables-navc">
+                                    <img src="img/ui/list/list.svg" alt="">
+                                    <span>Таблицы</span>
+                                </button>
+                            </div>
+                            <button class="navbtn" id="settings-navc">
+                                <img src="img/ui/settings.svg" alt="">
+                                <span>Настройки</span>
+                            </button>
+                        </div>
+                        <div id="nav" class="doNotHide floating" style="max-height: unset; position: relative;">
+                            <button id="openmenu" onclick="openNavPanel()" style="top: var(--ds);">
+                                <img src="img/ui/lines.svg">
+                            </button>
+                            <div id="navcontent">
+                                <button class="navbtn" id="home-navc">
+                                    <img src="img/ui/home.svg" alt="">
+                                    <span>Main</span>
+                                </button>
+                                <button class="navbtn active" id="demo-navc">
+                                    <img src="img/ui/text.svg" alt="">
+                                    <span>Demo</span>
+                                </button>
+                                <button class="navbtn" id="about-navc">
+                                    <img src="img/ui/user.svg" alt="">
+                                    <span>About</span>
+                                </button>
+                                <button class="navbtn" id="cards-navc">
+                                    <img src="img/ui/edit.svg" alt="">
+                                    <span>Cards</span>
+                                </button>
+                                <button class="navbtn" id="buttons-navc">
+                                    <img src="img/ui/edit.svg" alt="">
+                                    <span>Buttons</span>
+                                </button>
+                                <button class="navbtn" id="seek-navc">
+                                    <img src="img/ui/spliter.svg" alt="">
+                                    <span>SeekBar</span>
+                                </button>
+                                <button class="navbtn" id="media-navc">
+                                    <img src="img/ui/image.svg" alt="">
+                                    <span>Медиа</span>
+                                </button>
+                                <button class="navbtn" id="tables-navc">
+                                    <img src="img/ui/list/list.svg" alt="">
+                                    <span>Таблицы</span>
+                                </button>
+                            </div>
+                            <button class="navbtn" id="settings-navc">
+                                <img src="img/ui/settings.svg" alt="">
+                                <span>Настройки</span>
+                            </button>
+                        </div>
+                        <div id="nav" class="doNotHide active" style="max-height: unset; position: relative;">
+                            <button id="openmenu" onclick="openNavPanel()" style="top: var(--ds);">
+                                <img src="img/ui/lines.svg">
+                            </button>
+                            <div id="navcontent">
+                                <button class="navbtn" id="home-navc">
+                                    <img src="img/ui/home.svg" alt="">
+                                    <span>Main</span>
+                                </button>
+                                <button class="navbtn active" id="demo-navc">
+                                    <img src="img/ui/text.svg" alt="">
+                                    <span>Demo</span>
+                                </button>
+                                <button class="navbtn" id="about-navc">
+                                    <img src="img/ui/user.svg" alt="">
+                                    <span>About</span>
+                                </button>
+                                <button class="navbtn" id="cards-navc">
+                                    <img src="img/ui/edit.svg" alt="">
+                                    <span>Cards</span>
+                                </button>
+                                <button class="navbtn" id="buttons-navc">
+                                    <img src="img/ui/edit.svg" alt="">
+                                    <span>Buttons</span>
+                                </button>
+                                <button class="navbtn" id="seek-navc">
+                                    <img src="img/ui/spliter.svg" alt="">
+                                    <span>SeekBar</span>
+                                </button>
+                                <button class="navbtn" id="media-navc">
+                                    <img src="img/ui/image.svg" alt="">
+                                    <span>Медиа</span>
+                                </button>
+                                <button class="navbtn" id="tables-navc">
+                                    <img src="img/ui/list/list.svg" alt="">
+                                    <span>Таблицы</span>
+                                </button>
+                            </div>
+                            <button class="navbtn" id="settings-navc">
+                                <img src="img/ui/settings.svg" alt="">
+                                <span>Настройки</span>
+                            </button>
+                        </div>
+                        <div id="nav" class="doNotHide floating active" style="max-height: unset; position: relative;">
+                            <button id="openmenu" onclick="openNavPanel()" style="top: var(--ds);">
+                                <img src="img/ui/lines.svg">
+                            </button>
+                            <div id="navcontent">
+                                <button class="navbtn" id="home-navc">
+                                    <img src="img/ui/home.svg" alt="">
+                                    <span>Main</span>
+                                </button>
+                                <button class="navbtn active" id="demo-navc">
+                                    <img src="img/ui/text.svg" alt="">
+                                    <span>Demo</span>
+                                </button>
+                                <button class="navbtn" id="about-navc">
+                                    <img src="img/ui/user.svg" alt="">
+                                    <span>About</span>
+                                </button>
+                                <button class="navbtn" id="cards-navc">
+                                    <img src="img/ui/edit.svg" alt="">
+                                    <span>Cards</span>
+                                </button>
+                                <button class="navbtn" id="buttons-navc">
+                                    <img src="img/ui/edit.svg" alt="">
+                                    <span>Buttons</span>
+                                </button>
+                                <button class="navbtn" id="seek-navc">
+                                    <img src="img/ui/spliter.svg" alt="">
+                                    <span>SeekBar</span>
+                                </button>
+                                <button class="navbtn" id="media-navc">
+                                    <img src="img/ui/image.svg" alt="">
+                                    <span>Медиа</span>
+                                </button>
+                                <button class="navbtn" id="tables-navc">
+                                    <img src="img/ui/list/list.svg" alt="">
+                                    <span>Таблицы</span>
+                                </button>
+                            </div>
+                            <button class="navbtn" id="settings-navc">
+                                <img src="img/ui/settings.svg" alt="">
+                                <span>Настройки</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="componentCard">
+                    <h2 class="componentName">Top Navigation</h2>
+                    <div class="componentVariations">
+                        <div class="btnsList topNav">
+                            <button data-where="all" class="active">
+                                <div class="imgcont">
+                                    <img src="img/ui/check/checked.svg">
+                                </div>
+                                <p>all</p>
+                            </button>
+                            <button data-where="horizontal">
+                                <div class="imgcont">
+                                    <img src="img/ui/check/checked.svg">
+                                </div>
+                                <p>horizontal</p>
+                            </button>
+                            <button data-where="vertical">
+                                <div class="imgcont">
+                                    <img src="img/ui/check/checked.svg">
+                                </div>
+                                <p>vertical</p>
+                            </button>
+                            <button data-where="special">
+                                <div class="imgcont">
+                                    <img src="img/ui/check/checked.svg">
+                                </div>
+                                <p>special</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="componentCard">
+                    <h2 class="componentName">Top App Bar</h2>
+                    <div class="componentVariations">
+                        <div class="page-header-btns">
+                            <button class="leftBtnsNav" onclick="window.cnavMgr.openNavPanel()"><img src="img/ui/lines.svg"></button>
+                            <div class="lefthead">
+                                <button>
+                                    <img src="img/ui/search.svg">
+                                </button>
+                                <button>
+                                    <img src="img/ui/add2.svg">
+                                </button>
+                                <button>
+                                    <img src="img/ui/more.svg">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function changeSpecialPage(id) {
+        document.querySelectorAll('.specialPage').forEach(page => {
+            page.classList.remove('active')
+        })
+
+        const target = document.getElementById(id)
+        if (target) target.classList.add('active')
+        target.classList.add('active')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        changeSpecialPage('welcome')
+        changeSpecialPage('components')
+    })
+</script>
+
+</html>

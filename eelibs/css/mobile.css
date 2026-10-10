@@ -40,7 +40,7 @@
         }
 
         #nav {
-            &:not(.active) {
+            &:not(.active):not(.doNotHide) {
                 width: 0;
                 max-width: 0;
                 min-width: 0;
@@ -54,6 +54,7 @@
 
     #navdown {
         display: inline-flex;
+        align-items: center;
     }
 
     .page.active {

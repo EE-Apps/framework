@@ -5,6 +5,9 @@ window.eelib = {
         noName: false,
         noIcon: false,
     },
+    theme: {
+        blackDown: true,
+    }
 };
 
 window.eelib.pages = [
@@ -37,20 +40,10 @@ window.eelib.pages = [
         subpagesmode: 'default',
     },
     {
-        id: 'cards',
-        title: 'Cards',
-        icon: 'img/ui/edit.svg',
-    },
-    {
-        id: 'buttons',
-        title: 'Buttons',
-        icon: 'img/ui/edit.svg',
-    },
-    {
         id: 'about',
         title: 'About',
         icon: 'img/ui/user.svg',
-        leftBtn: 'none',
+        leftBtn: 'back',
         btns: [
             ['search'],
             ['add'],
@@ -60,6 +53,18 @@ window.eelib.pages = [
             'seek',
         ],
         subpagesmode: 'modal',
+        noNav: true,
+    },
+    {
+        id: 'cards',
+        title: 'Cards',
+        icon: 'img/ui/edit.svg',
+    },
+    {
+        id: 'buttons',
+        title: 'Buttons',
+        icon: 'img/ui/edit.svg',
+        leftBtn: 'none',
     },
     {
         id: 'seek',
