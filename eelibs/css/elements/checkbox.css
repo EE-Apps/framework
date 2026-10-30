@@ -3,9 +3,9 @@
     --switch-width: 46px;
     --switch-height: 26px;
     --thumb-size: 18px;
-    --thumb-active-size: 21px; /* Чуть больше при включении */
+    --thumb-active-size: 21px;
     --bg-off: var(--text-pri);
-    --bg-on: var(--ac-text); /* Фирменный синий Samsung */
+    --bg-on: var(--ac-text);
     
     position: relative;
     display: inline-block;
@@ -26,14 +26,12 @@
     }
 }
 
-/* Скрываем дефолтный чекбокс */
 .oneui-switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-/* Фон переключателя */
 .oneui-switch .slider {
     position: absolute;
     cursor: pointer;
@@ -43,7 +41,6 @@
     border-radius: 34px;
 }
 
-/* Ползунок (шарик) */
 .oneui-switch .slider:before {
     content: "";
     position: absolute;
@@ -51,26 +48,182 @@
     width: var(--thumb-size);
     left: 4px;
     bottom: 4px;
-    background-color: #8c8c8c; /* Серый в выключенном состоянии */
+    background-color: #8c8c8c;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 50%;
 }
 
-/* Состояние: Включено (Меняем фон) */
 .oneui-switch input:checked + .slider {
     background-color: var(--bg-on);
 }
 
-/* Состояние: Включено (Двигаем и увеличиваем шарик) */
 .oneui-switch input:checked + .slider:before {
     background-color: white;
     transform: translateX(calc(var(--switch-width) - var(--thumb-active-size) - 8px));
     height: var(--thumb-active-size);
     width: var(--thumb-active-size);
-    bottom: 2.5px; /* Корректируем центровку из-за размера */
+    bottom: 2.5px;
 }
 
-/* Эффект нажатия (Active state) */
 .oneui-switch:active .slider:before {
-    width: 24px; /* Шарик немного растягивается при тапе */
+    width: 24px;
+}
+
+
+.oneui-checkbox {
+    --checkbox-size: 22px;
+    --checkbox-color: var(--ac-text);
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: var(--checkbox-size);
+    height: var(--checkbox-size);
+    flex-shrink: 0;
+
+    margin: 0;
+    position: relative;
+
+    border: 2px solid var(--text-sec, #888);
+    border-radius: 6px;
+
+    background: var(--bg-sec, #eee);
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        transform .15s ease;
+}
+
+.checkbox:checked {
+    background: var(--checkbox-color);
+    border-color: var(--checkbox-color);
+}
+
+/* Checkmark */
+
+.checkbox::after {
+    content: "";
+
+    position: absolute;
+    left: 6px;
+    top: 2px;
+
+    width: 6px;
+    height: 11px;
+
+    border: solid white;
+    border-width: 0 2px 2px 0;
+
+    transform: rotate(45deg) scale(0);
+    opacity: 0;
+
+    transition:
+        transform .2s cubic-bezier(.2, .8, .2, 1),
+        opacity .15s ease;
+}
+
+.oneui-checkbox:checked::after {
+    transform: rotate(45deg) scale(1);
+    opacity: 1;
+}
+
+.oneui-checkbox:active {
+    transform: scale(.88);
+}
+
+.checkbox:focus-visible {
+    outline: 3px solid color-mix(
+        in srgb,
+        var(--checkbox-color) 30%,
+        transparent
+    );
+    outline-offset: 3px;
+}
+
+checkbox:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+
+.radio {
+    --radio-size: 22px;
+    --radio-color: var(--ac-text);
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: var(--radio-size);
+    height: var(--radio-size);
+    flex-shrink: 0;
+
+    margin: 0;
+    position: relative;
+
+    border: 2px solid var(--text-sec, #888);
+    border-radius: 50%;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    transition:
+        border-color .2s ease,
+        transform .15s ease;
+}
+
+.radio::after {
+    content: "";
+
+    position: absolute;
+    inset: 4px;
+
+    border-radius: 50%;
+    background: var(--radio-color);
+
+    transform: scale(0);
+    opacity: 0;
+
+    transition:
+        transform .2s cubic-bezier(.2, .8, .2, 1),
+        opacity .15s ease;
+}
+
+.radio:checked {
+    border-color: var(--radio-color);
+}
+
+.radio:checked::after {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.radio:active {
+    transform: scale(.88);
+}
+
+.radio:focus-visible {
+    outline: 3px solid color-mix(
+        in srgb,
+        var(--radio-color) 30%,
+        transparent
+    );
+    outline-offset: 3px;
+}
+
+.radio:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .checkbox,
+    .checkbox::after,
+    .radio,
+    .radio::after {
+        transition: none;
+    }
 }
