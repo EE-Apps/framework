@@ -67,7 +67,7 @@
     transform: translateX(calc(var(--switch-width) - var(--thumb-active-size) - 8px));
     height: var(--thumb-active-size);
     width: var(--thumb-active-size);
-    bottom: 2.5px; /* Корректируем центровку из-за размера */
+    bottom: 2.5px;
 }
 
 /* Эффект нажатия (Active state) */
