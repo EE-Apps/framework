@@ -118,13 +118,17 @@ class SettingsManager {
                 console.error('[SettingsManager] Error saving to localStorage:', e);
             }
 
+            window.notification.info(this.bridge)
+            alert(this.bridge)
             // 2. Сохраняем в файл settings.json через bridge (Android/Tauri/Web Mock)
             if (this.bridge) {
                 try {
                     // ВАЖНО: явно передаем this.settingsFileName
                     const result = await this.bridge.saveSettings(this.settings, this.settingsFileName);
+                    window.notification.success('SettingsManager', `Saved to file (${this.bridge.env}):`, result)
                     console.log(`[SettingsManager] Saved to file (${this.bridge.env}):`, result);
                 } catch (e) {
+                    window.notification.error('SettingsManager', `Failed to save to file (${this.bridge.env}):`, e)
                     console.warn(`[SettingsManager] Failed to save to file (${this.bridge.env}):`, e);
                 }
             }
@@ -136,8 +140,10 @@ class SettingsManager {
         } catch (e) {
             console.error('[SettingsManager] Error in save():', e);
         } finally {
-            this.isSyncing = false;
+            this.isSyncing = false
         }
+        this.isSyncing = false
+        alert('yea')
     }
 
     // Получение значения по пути
@@ -243,7 +249,7 @@ class SettingsManager {
         if (item.type === "toggle") {
             block.innerHTML = `
                 <label>${item.label}</label>
-                <label class="oneui-switch">
+                <label class="switcht">
                     <input type="checkbox" ${value ? "checked" : ""}>
                     <span class="slider"></span>
                 </label>

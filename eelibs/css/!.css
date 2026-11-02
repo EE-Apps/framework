@@ -79,13 +79,13 @@
     --dss2: calc(var(--dss) * 2);
 
     /* Размеры текста */
-    --text-size-title-big:      3.00rem;
-    --text-size-title:          2.25rem;
-    --text-size-head:           1.50rem;
-    --text-size-subtitle:       1.25rem;
-    --text-size-subheading:     1.10rem;
-    --text-size-body:           1.00rem;
-    --text-size-small:          0.90rem;
+    --text-size-title-big:      3.00em;
+    --text-size-title:          2.25em;
+    --text-size-head:           1.50em;
+    --text-size-subtitle:       1.25em;
+    --text-size-subheading:     1.10em;
+    --text-size-body:           1.00em;
+    --text-size-small:          0.90em;
 
     --text-weight-title-big:    800;
     --text-weight-title:        700;
