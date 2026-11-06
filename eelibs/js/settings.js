@@ -118,8 +118,6 @@ class SettingsManager {
                 console.error('[SettingsManager] Error saving to localStorage:', e);
             }
 
-            window.notification.info(this.bridge)
-            alert(this.bridge)
             // 2. Сохраняем в файл settings.json через bridge (Android/Tauri/Web Mock)
             if (this.bridge) {
                 try {
@@ -143,7 +141,6 @@ class SettingsManager {
             this.isSyncing = false
         }
         this.isSyncing = false
-        alert('yea')
     }
 
     // Получение значения по пути
