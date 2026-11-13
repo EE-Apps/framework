@@ -38,6 +38,8 @@ class settingCard {
         this.el.appendChild(this.buttons)
 
         this.createInput()
+
+        this.useAdditionalParams()
     }
 
     update() {}
@@ -61,6 +63,8 @@ class settingCard {
         
         if (fullPoinersTypes.includes(this.type) || this.params?.splited !== true) this.el.classList.add('fullMouse')
         
+        let input, updateSwitchState
+
         switch (this.type) {
             case "range": 
                 this.input = document.createElement('input')
@@ -98,12 +102,12 @@ class settingCard {
                     <input type="checkbox" ${this.value ? "checked" : ""}>
                     <span class="slider"></span>
                 `
-                const input = this.div.querySelector("input")
+                input = this.div.querySelector("input")
 
-                const updateSwitchState = (isChecked) => {
+                updateSwitchState = (isChecked) => {
                     this.value = isChecked
                     if (this.valueShow) {
-                        this.valueShow.textContent = isChecked ? 'On' : 'Off' // Или оставляйте true/false
+                        this.valueShow.textContent = isChecked ? 'On' : 'Off'
                         this.valueShow.style.color = isChecked ? 'var(--ac-text)' : ''
                     }
                 }
@@ -124,9 +128,82 @@ class settingCard {
                 })
 
                 break
+            case "checkbox":
+                this.div = document.createElement('div')
+                this.div.className = 'checkboxt'
+                this.div.innerHTML = `
+                    <input type="checkbox" class="${this.params?.grouped ? 'grouped' : ''}" ${this.value ? "checked" : ""}>
+                `
+                input = this.div.querySelector("input")
+
+                updateSwitchState = (isChecked) => {
+                    this.value = isChecked
+                    if (this.valueShow) {
+                        this.valueShow.textContent = isChecked ? 'On' : 'Off'
+                        this.valueShow.style.color = isChecked ? 'var(--ac-text)' : ''
+                    }
+                }
+
+                updateSwitchState(input.checked);
+
+                input.addEventListener("change", e => {
+                    updateSwitchState(e.target.checked)
+                })
+                
+                this.buttons.appendChild(this.div)
+
+                this.el.addEventListener('click', (e) => {
+                    if (e.target === input) return
+                    input.checked = !input.checked
+                    updateSwitchState(input.checked)
+                    input.dispatchEvent(new Event('change'))
+                })
+
+                break
+            case "radio":
+                this.div = document.createElement('div')
+                this.div.className = 'radiot'
+                console.log(this.params)
+                this.div.innerHTML = `
+                    <input type="radio" name="${this.params.name?? ''}" ${this.value ? "checked" : ""}>
+                `
+                input = this.div.querySelector("input")
+
+                updateSwitchState = (isChecked) => {
+                    this.value = isChecked
+                    if (this.valueShow) {
+                        this.valueShow.textContent = isChecked ? 'On' : 'Off'
+                        this.valueShow.style.color = isChecked ? 'var(--ac-text)' : ''
+                    }
+                }
+
+                updateSwitchState(input.checked);
+
+                input.addEventListener("change", e => {
+                    updateSwitchState(e.target.checked)
+                })
+                
+                this.buttons.appendChild(this.div)
+
+                this.el.addEventListener('click', (e) => {
+                    if (e.target === input) return
+                    input.checked = true
+                    updateSwitchState(input.checked)
+                    input.dispatchEvent(new Event('change'))
+                })
+
+                break
             default:
                 console.log('Unknown type')
         }
+    }
+
+    useAdditionalParams() {
+        if (!this.params) return
+
+        if (this.params.reversed) this.el.classList.add('reversed')
+
+        if (this.params.noText) this.el.classList.add('rounded', 'noText')
     }
 
     setValue(value) {
@@ -150,12 +227,61 @@ class settingsCardsMgr {
     createCard(id, type, title, description) {
 
     }
+
+    createGroup(id, title, description, params) {
+        const el = document.createElement('div')
+        el.className = 'settingCardsGroup ' + params?.class?? ''
+        el.id = id?? ''
+
+        if (title) {
+            const titleEl = document.createElement('h2')
+            titleEl.textContent = title
+            titleEl.className = 'settingsCardsGroupTitle'
+            el.appendChild(titleEl)
+        }
+
+        if (description) {
+            const descriptionEl = document.createElement('p')
+            descriptionEl.textContent = description
+            descriptionEl.className = 'settingsCardsGroupDescription'
+            el.appendChild(descriptionEl)
+        }
+
+        return(el)
+    }
 }
 
 window.settingCard = settingCard
 window.settingsCardsMgr = new settingsCardsMgr
 
-if (document.location.href === 'http://127.0.0.1:5501/blank.html') {
-    document.querySelector('#demo .pageContent').prepend((new settingCard('teste', 'slider', 'Hello', 'world', {min: 5, max: 10})).returnEl())
-    document.querySelector('#demo .pageContent').prepend((new settingCard('teste2', 'switch', 'World', 'hello', {default: true})).returnEl())
+if (document.location.href === 'http://127.0.0.1:5501/blank.html' || 
+    document.location.href === 'http://192.168.100.18:5501/blank.html') {
+    
+    const group4 = window.settingsCardsMgr.createGroup('hitest', 'Radio', 'Выбор одного', {class: 'dense'})
+    const group3 = window.settingsCardsMgr.createGroup('hitest', 'Checkbox', 'Выбор нескольких', {class: 'dense'})
+    const group2 = window.settingsCardsMgr.createGroup('hitest', 'Включатели', 'Тык на переключатели', {class: 'dense'})
+    const group = window.settingsCardsMgr.createGroup(false, 'Всякое', 'Кучу всяких карточек накидал - потом может разсортирую')
+    document.querySelector('#demo .pageContent').prepend(group)
+    document.querySelector('#demo .pageContent').prepend(group2)
+    document.querySelector('#demo .pageContent').prepend(group3)
+    document.querySelector('#demo .pageContent').prepend(group4)
+
+    document.querySelector('#demo .pageContent').prepend((new settingCard('teste2', 'switch', false, false, {default: true, noText: true})).returnEl())
+    group.appendChild((new settingCard('teste2', 'checkbox', 'Checkbox', false,      {default: true})).returnEl())
+    group.appendChild((new settingCard('teste2', 'checkbox', 'Grouped',  false,      {default: true, grouped: true, reversed: true})).returnEl())
+    group.appendChild((new settingCard('teste2', 'slider',   'Hello',    'world',    {min: 5, max: 10})).returnEl())
+    group.appendChild((new settingCard('teste2', 'switch',   'World',    'hello',    {default: true})).returnEl())
+    group.appendChild((new settingCard('teste2', 'switch',   'World',    false,      {default: true})).returnEl())
+
+    group2.appendChild((new settingCard('teste2', 'switch',   'Один',    false,      {default: true, reversed: true})).returnEl())
+    group2.appendChild((new settingCard('teste2', 'switch',   'Два',     false,      {default: true, reversed: true})).returnEl())
+    group2.appendChild((new settingCard('teste2', 'switch',   'Три',     false,      {default: true, reversed: true})).returnEl())
+
+    group3.appendChild((new settingCard('teste2', 'checkbox', 'Один',    false,      {default: true, reversed: true, grouped: true})).returnEl())
+    group3.appendChild((new settingCard('teste2', 'checkbox', 'Два',     false,      {default: true, reversed: true, grouped: true})).returnEl())
+    group3.appendChild((new settingCard('teste2', 'checkbox', 'Три',     false,      {default: true, reversed: true, grouped: true})).returnEl())
+
+    group4.appendChild((new settingCard('teste2', 'radio',    'Один',    false,      {default: true, reversed: true, name: 'group3'})).returnEl())
+    group4.appendChild((new settingCard('teste2', 'radio',    'Два',     false,      {default: true, reversed: true, name: 'group3'})).returnEl())
+    group4.appendChild((new settingCard('teste2', 'radio',    'Три',     false,      {default: true, reversed: true, name: 'group3'})).returnEl())
 }
